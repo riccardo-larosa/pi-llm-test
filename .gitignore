@@ -1,1 +1,12 @@
+node_modules/
+*.sqlite
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+playwright-report/
+.playwright/
+results/results.json
+.DS_Store
+*.log
+dist/
 .worktrees/
