@@ -1,4 +1,4 @@
-import { execa, type ResultPromise } from "execa";
+import { execa } from "execa";
 import getPort from "get-port";
 import { fetch } from "undici";
 import { resolve } from "node:path";
@@ -9,7 +9,7 @@ export type SubmissionHandle = {
   dir: string;
   port: number;
   baseUrl: string;
-  proc: ResultPromise<{ reject: false }>;
+  proc: ReturnType<typeof execa>;
   build: BuildResult;
   startup: StartupResult;
   dbPath: string;
@@ -104,7 +104,7 @@ export async function startSubmission(dir: string): Promise<SubmissionHandle> {
   return { dir: absDir, port, baseUrl, proc, build, startup, dbPath };
 }
 
-async function waitForExit(proc: ResultPromise<{ reject: false }>, ms: number): Promise<void> {
+async function waitForExit(proc: ReturnType<typeof execa>, ms: number): Promise<void> {
   await Promise.race([
     proc.catch(() => undefined),
     new Promise<void>((resolve) => setTimeout(resolve, ms)),
