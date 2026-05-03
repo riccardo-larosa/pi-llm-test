@@ -1,10 +1,10 @@
 # Shopping Cart LLM Benchmark — Results
 
-Generated: 2026-05-03T17:13:20.449Z
+Generated: 2026-05-03T19:32:40.068Z
 
 | Rank | Submission | Composite | Correctness | Frontend | Perf | Build | Install ms | Build ms | Startup ms | GET p95 | POST p95 | Bundle bytes | DOM ms |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | `_reference` | 100 | 100 | 100 | 100 | 100 | 295 | 91 | 414 | 0.31 | 4.25 | 3464 | 549 |
+| 1 | `_reference` | 100 | 100 | 100 | 100 | 100 | 177 | 92 | 414 | 0.34 | 2.56 | 3464 | 553 |
 
 ## Per-submission correctness breakdown
 
