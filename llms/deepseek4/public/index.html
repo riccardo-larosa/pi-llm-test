@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>🛒 Shopping Cart</h1>
+  </header>
+
+  <main>
+    <section id="products-section">
+      <h2>Products</h2>
+      <div id="products-list" class="grid">
+        <p>Loading products…</p>
+      </div>
+    </section>
+
+    <section id="cart-section">
+      <h2>Your Cart</h2>
+      <div id="cart-list">
+        <p>Loading cart…</p>
+      </div>
+      <div id="cart-total" class="total"></div>
+    </section>
+  </main>
+
+  <script>
+    async function fetchProducts() {
+      const res = await fetch("/api/products");
+      const data = await res.json();
+      return data.products;
+    }
+
+    async function fetchCart() {
+      const res = await fetch("/api/cart");
+      const data = await res.json();
+      return data.items;
+    }
+
+    async function addToCart(productId) {
+      await fetch("/api/cart/items", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, quantity: 1 }),
+      });
+      await renderCart();
+    }
+
+    async function patchItem(itemId, quantity) {
+      if (quantity < 1) {
+        await removeItem(itemId);
+        return;
+      }
+      await fetch("/api/cart/items/" + encodeURIComponent(itemId), {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantity }),
+      });
+      await renderCart();
+    }
+
+    async function removeItem(itemId) {
+      await fetch("/api/cart/items/" + encodeURIComponent(itemId), {
+        method: "DELETE",
+      });
+      await renderCart();
+    }
+
+    function formatPrice(cents) {
+      return "$" + (cents / 100).toFixed(2);
+    }
+
+    async function renderProducts() {
+      const container = document.getElementById("products-list");
+      try {
+        const products = await fetchProducts();
+        container.innerHTML = products.length
+          ? products
+              .map(
+                (p) => `
+            <div class="card">
+              <h3>${esc(p.name)}</h3>
+              <p class="price">${formatPrice(p.priceCents)}</p>
+              <button data-testid="add-to-cart" data-product-id="${esc(p.id)}">
+                Add to Cart
+              </button>
+            </div>`,
+              )
+              .join("")
+          : "<p>No products available.</p>";
+
+        container.querySelectorAll("[data-testid='add-to-cart']").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const productId = this.getAttribute("data-product-id");
+            if (productId) addToCart(productId);
+          });
+        });
+      } catch (err) {
+        container.innerHTML = "<p>Failed to load products.</p>";
+      }
+    }
+
+    async function renderCart() {
+      const container = document.getElementById("cart-list");
+      const totalEl = document.getElementById("cart-total");
+      try {
+        const items = await fetchCart();
+        if (items.length === 0) {
+          container.innerHTML = "<p>Your cart is empty.</p>";
+          totalEl.textContent = "";
+          return;
+        }
+
+        container.innerHTML = items
+          .map(
+            (it) => `
+          <div class="cart-item">
+            <span class="item-name">${esc(it.name)}</span>
+            <span class="item-price">${formatPrice(it.priceCents)} each</span>
+            <div class="qty-controls">
+              <button class="qty-btn" data-action="dec" data-id="${esc(it.id)}" data-qty="${it.quantity}">−</button>
+              <input type="number" class="qty-input" data-id="${esc(it.id)}" value="${it.quantity}" min="1" />
+              <button class="qty-btn" data-action="inc" data-id="${esc(it.id)}" data-qty="${it.quantity}">+</button>
+            </div>
+            <span class="item-subtotal">${formatPrice(it.priceCents * it.quantity)}</span>
+            <button data-testid="remove-item" data-id="${esc(it.id)}">Remove</button>
+          </div>`,
+          )
+          .join("");
+
+        const total = items.reduce((s, it) => s + it.priceCents * it.quantity, 0);
+        totalEl.textContent = "Total: " + formatPrice(total);
+
+        // Wire up quantity buttons
+        container.querySelectorAll(".qty-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const itemId = this.getAttribute("data-id");
+            const action = this.getAttribute("data-action");
+            const input = container.querySelector(".qty-input[data-id='" + CSS.escape(itemId) + "']");
+            let qty = parseInt(input.value, 10) || 1;
+            qty = action === "inc" ? qty + 1 : qty - 1;
+            if (itemId) patchItem(itemId, qty);
+          });
+        });
+
+        container.querySelectorAll(".qty-input").forEach((input) => {
+          input.addEventListener("change", function () {
+            const itemId = this.getAttribute("data-id");
+            const qty = parseInt(this.value, 10) || 1;
+            if (itemId) patchItem(itemId, qty);
+          });
+        });
+
+        container.querySelectorAll("[data-testid='remove-item']").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const itemId = this.getAttribute("data-id");
+            if (itemId) removeItem(itemId);
+          });
+        });
+      } catch (err) {
+        container.innerHTML = "<p>Failed to load cart.</p>";
+        totalEl.textContent = "";
+      }
+    }
+
+    function esc(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
