@@ -1,8 +1,0 @@
-{"run":1,"commit":"d742aa5","metric":0,"metrics":{},"status":"keep","description":"Starting project implementation","timestamp":1777843964453,"segment":0,"confidence":null}
-{"run":2,"commit":"713bd13","metric":0,"metrics":{},"status":"keep","description":"Starting project implementation","timestamp":1777843977002,"segment":0,"confidence":null}
-{"run":3,"commit":"e1a9a7c","metric":0,"metrics":{},"status":"keep","description":"Starting project implementation","timestamp":1777843980593,"segment":0,"confidence":null}
-{"run":4,"commit":"f9c22b5","metric":0,"metrics":{},"status":"keep","description":"hello","timestamp":1777843983436,"segment":0,"confidence":null}
-{"type":"config","name":"Shopping Cart Implementation","metricName":"setup_time","metricUnit":"s","bestDirection":"lower"}
-{"run":5,"commit":"cdc5ff2","metric":0,"metrics":{},"status":"keep","description":"Starting project implementation","timestamp":1777844061124,"segment":1,"confidence":null}
-{"run":6,"commit":"2ee4388","metric":0,"metrics":{},"status":"keep","description":"Starting project implementation","timestamp":1777844064901,"segment":1,"confidence":null}
-{"type":"config","name":"Shopping Cart Implementation","metricName":"setup_time","metricUnit":"s","bestDirection":"lower"}
