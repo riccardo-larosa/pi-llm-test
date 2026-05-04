@@ -59,6 +59,8 @@ if (existingCount.count === 0) {
     }
   });
   tx(seedProducts);
+  // Clear cart on first startup only (fresh DB)
+  db.exec("DELETE FROM cart_items");
 }
 
 // --- App ---
