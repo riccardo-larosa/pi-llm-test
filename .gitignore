@@ -3,6 +3,10 @@ node_modules/
 *.sqlite-journal
 *.sqlite-shm
 *.sqlite-wal
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
 playwright-report/
 .playwright/
 results/results.json
