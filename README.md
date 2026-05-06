@@ -81,3 +81,12 @@ Provider field mapping examples:
 - Gemini: `usageMetadata.promptTokenCount`, `usageMetadata.candidatesTokenCount`, `usageMetadata.totalTokenCount`
 
 If using a web UI that does not expose exact token usage, either leave token fields as `null` or mark them as estimates in `notes`.
+
+
+The prompt for each model is 
+
+```
+Please read ../../spec/PROMPT.md and implement the requested project in the current directory.
+Do not modify files outside this directory. 
+When done, ensure npm install, npm run build, and npm start work.
+```
