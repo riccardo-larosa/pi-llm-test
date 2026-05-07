@@ -2,6 +2,21 @@
 
 Generated: 2026-05-04T03:00:35.083Z
 
+## Lines of code summary
+
+Counts include non-blank lines in `*.ts`, `*.js`, `*.html`, and `*.css` files. Excludes generated/dependency files, session logs, lockfiles, and databases.
+
+| Submission | Tokens | Cost | Non-blank LOC |
+|---|---:|---:|---:|
+| `_reference` | — | — | 188 |
+| `deepseek4` | 358,771 | $0.0413 | 551 |
+| `gpt-5.5` | 1,612,686 | $3.827444 | 728 |
+| `kimi2.6` | 529,398 | $0.2641 | 275 |
+| `opus4.7` | 541,132 | $1.67702 | 370 |
+| `qwen3.6` | 622,252 | $0.27 | 295 |
+
+## Full benchmark results
+
 | Rank | Submission | Tokens | Cost | Composite | Correctness | Frontend | Perf | Build | Install ms | Build ms | Startup ms | GET p95 | POST p95 | Bundle bytes | DOM ms |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | 3 | `_reference` | — | — | 95.1 | 100 | 100 | 67.5 | 100 | 187 | 93 | 421 | 0.66 | 3.07 | 3464 | 555 |
@@ -10,19 +25,6 @@ Generated: 2026-05-04T03:00:35.083Z
 | 5 | `kimi2.6` | 529,398 | $0.2641 | 93.8 | 100 | 100 | 58.5 | 100 | 190 | 91 | 411 | 0.6 | 3.1 | 6618 | 511 |
 | 2 | `opus4.7` | 541,132 | $1.67702 | 96 | 100 | 100 | 73.2 | 100 | 184 | 444 | 207 | 0.29 | 2.39 | 6633 | 519 |
 | 1 | `qwen3.6` | 622,252 | $0.27 | 96.4 | 100 | 100 | 75.8 | 100 | 218 | 639 | 611 | 0.38 | 1.09 | 11678 | 512 |
-
-## Lines of code summary
-
-Counts include non-blank lines in `*.ts`, `*.js`, `*.html`, and `*.css` files. Excludes generated/dependency files, session logs, lockfiles, and databases.
-
-| Submission | Non-blank LOC |
-|---|---:|
-| `_reference` | 188 |
-| `deepseek4` | 551 |
-| `gpt-5.5` | 728 |
-| `kimi2.6` | 275 |
-| `opus4.7` | 370 |
-| `qwen3.6` | 295 |
 
 ## Per-submission correctness breakdown
 
